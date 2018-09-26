@@ -1,0 +1,43 @@
+NOTAS.
+
+ENTORNO VIRTUAL
+	sudo apt-get install python3.6-venv
+	python3.6 -m venv virtualenv
+	source virtualenv/bin/activate
+
+GECKODRIVER
+	Descargar:
+		https://github.com/mozilla/geckodriver/releases
+	Descomprimir y copiar en:
+		/usr/local/bin/
+	Probar la version:
+		geckodriver --version
+
+DJANGO Y SELENIUM
+	pip install django selenium
+
+Iniciar proyecto
+	# Si hay un error de otra aplicacion con django
+	# export DJANGO_SETTINGS_MODULE=
+	django-admin.py startproject carmesi
+
+GITHUB
+	Iniciar git:
+		git init .
+	Ignorar archivos
+		echo "db.sqlite3" >> .gitignore
+		echo "geckodriver.log" >> .gitignore
+		echo "virtualenv" >> .gitignore
+		echo "__pycache__" >> .gitignore
+		echo "*.pyc" >> .gitignore
+
+
+	Si ya se habia agregado a git para ignorarlo:
+		git rm -r --cached carmesi/__pycache__
+		-- Se agrega el archivo en .gitignore
+	
+
+
+Correr el proyecto
+	./manage.py runserver --settings=carmesi.settings
+
