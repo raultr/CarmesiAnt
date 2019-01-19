@@ -41,3 +41,26 @@ GITHUB
 Correr el proyecto
 	./manage.py runserver --settings=carmesi.settings
 
+Crea una aplicacion
+	python manage.py startapp App
+
+Ejecutar los Tests:
+	./manage.py test --settings=carmesi.settings
+
+Ejecutar un test en especifico:
+	./manage.py test parametros.test_api.ParametroNodoMenuAPITest --settings=carmesi.settings
+	
+	id_n./manage.py test parametros.test.NodoMenuServiceTest.test_cambiar_nodo_de_padre  --settings=carmesi.settings
+
+
+Admin de django:
+	python manage.py createsuperuser
+
+Migracion de los modelos:
+	./manage.py makemigrations --settings=carmesi.settings
+
+Agregar Debug:
+	pip install pudb
+	from pudb import set_trace; set_trace()
+	o
+	import pudb; pu.db
