@@ -1,6 +1,6 @@
 # standar library
 import json
-
+import os
 # third-party
 from sequences import get_next_value
 
@@ -10,7 +10,7 @@ from django.test import TestCase
 from django.db import IntegrityError
 from django.core.exceptions import ValidationError
 from rest_framework import status
-from rest_framework.test import APIClient
+from rest_framework.test import APIClient, APITestCase, CoreAPIClient, RequestsClient
 
 # Models
 from parametros.models import Menu, NodoMenu
@@ -20,12 +20,22 @@ from parametros.utils import UtileriasParametroTest
 # Factories
 from parametros.factories import ( MenuFactory, NodoMenuFactory, NodoMenuFactoryUtils )
 
-class ParametroMenuAPITest(TestCase):
+class ParametroMenuAPITest(APITestCase):
+
+    LOCAL_HOST = '' #"http://127.0.0.11:8000"
 
     def setUp(self):
+
        self.base_url = reverse('menu_list')
 
-       self.client = APIClient()
+       #self.client = RequestsClient()
+
+       self.staging_server = os.environ.get('STAGING_SERVER')
+       if not self.staging_server:
+            self.staging_server = self.LOCAL_HOST
+
+       self.base_url = f'{self.staging_server}{self.base_url}'
+
        #self.menu = MenuFactory.build()
        #self.nodoMenu = NodoMenuFactory()
 
@@ -36,12 +46,17 @@ class ParametroMenuAPITest(TestCase):
         )
 
     def test_ruta(self):
-        self.assertEqual(self.base_url,'/api/parametros/menu/')
+        ruta =  '/api/parametros/menu/'
+
+        ruta =f'{self.staging_server}{ruta}'
+        self.assertEqual(self.base_url, ruta)
 
     def test_get_returns_json_200(self):
-        response = self.client.get(self.base_url, format='json')
-        self.assertEqual(response['content-type'], 'application/json')
+        self.client = APIClient()
+        menu1 = Menu.objects.create(nombre="Menu Pato")
+        response = self.client.get(self.base_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response['content-type'], 'application/json')
 
     def test_get_menus_guardados(self):
         menu1 = Menu.objects.create(nombre="Menu Pato")
@@ -99,9 +114,11 @@ class ParametroMenuAPITest(TestCase):
         self.assertEqual(Menu.objects.count(),1)
         self.assertEqual(json.loads(response.content.decode('utf8')),{'nombre': ['This field must be unique.']})
 
-class ParametroNodoMenuAPITest(TestCase):
+class ParametroNodoMenuAPITest(APITestCase):
+    LOCAL_HOST = '' #"http://127.0.0.11:8000"
     setup_done = False
     base_url = reverse('nodo_menu_list')
+    client = CoreAPIClient()
 
     #base_url = '/api/parametros/nodo_menu/' #reverse('menu-list')
 
@@ -110,14 +127,22 @@ class ParametroNodoMenuAPITest(TestCase):
        if self.setup_done:
             return
        self.utilt = UtileriasParametroTest()
-       self.client = APIClient()
+       #self.client = APIClient()
        self.menu = MenuFactory() #Menu.objects.create(nombre="Menu1")
        get_next_value('nodosMenu', initial_value=0)
-       #self.setup_done= True
-       #import ipdb;ipdb.set_trace()
+
+       self.staging_server = os.environ.get('STAGING_SERVER')
+       if not self.staging_server:
+            self.staging_server = self.LOCAL_HOST
+
+       self.base_url = f'{self.staging_server}{self.base_url}'
+
 
     def test_ruta(self):
-        self.assertEqual(self.base_url,'/api/parametros/nodo_menu/')
+        ruta = '/api/parametros/nodo_menu/'
+        self.assertEqual(self.base_url,f'{self.staging_server}{ruta}')
+        #response = self.client.get(self.base_url)
+        #self.assertEqual(200, response.status_code)
 
     def test_POSTing_nuevos_nodomenu(self):
         data = {'id': '0',' menu': 1, 'nodo_padre': None, 'etiqueta':'Nodo Menu1','orden': 0}
