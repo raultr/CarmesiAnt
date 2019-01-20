@@ -23,6 +23,7 @@ from parametros.factories import ( MenuFactory, NodoMenuFactory, NodoMenuFactory
 class ParametroMenuAPITest(APITestCase):
 
     LOCAL_HOST = '' #"http://127.0.0.11:8000"
+    staging_server = ""
 
     def setUp(self):
 
@@ -30,9 +31,9 @@ class ParametroMenuAPITest(APITestCase):
 
        #self.client = RequestsClient()
 
-       self.staging_server = os.environ.get('STAGING_SERVER')
-       if not self.staging_server:
-            self.staging_server = self.LOCAL_HOST
+       #self.staging_server = os.environ.get('STAGING_SERVER')
+       #if not self.staging_server:
+       #     self.staging_server = self.LOCAL_HOST
 
        self.base_url = f'{self.staging_server}{self.base_url}'
 
@@ -116,6 +117,7 @@ class ParametroMenuAPITest(APITestCase):
 
 class ParametroNodoMenuAPITest(APITestCase):
     LOCAL_HOST = '' #"http://127.0.0.11:8000"
+    staging_server = ""
     setup_done = False
     base_url = reverse('nodo_menu_list')
     client = CoreAPIClient()
@@ -131,9 +133,9 @@ class ParametroNodoMenuAPITest(APITestCase):
        self.menu = MenuFactory() #Menu.objects.create(nombre="Menu1")
        get_next_value('nodosMenu', initial_value=0)
 
-       self.staging_server = os.environ.get('STAGING_SERVER')
-       if not self.staging_server:
-            self.staging_server = self.LOCAL_HOST
+       #self.staging_server = os.environ.get('STAGING_SERVER')
+       #if not self.staging_server:
+       #     self.staging_server = self.LOCAL_HOST
 
        self.base_url = f'{self.staging_server}{self.base_url}'
 
