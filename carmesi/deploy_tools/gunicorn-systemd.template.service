@@ -1,0 +1,15 @@
+[Unit]
+Description=Gunicorn server for DOMAIN
+
+[Service]
+Restart=on-failure
+User=carmesi
+WorkingDirectory=/home/carmesi/sites/DOMAIN
+EnvironmentFile=/home/carmesi/sites/DOMAIN/.env
+
+ExecStart=/home/carmesi/sites/DOMAIN/virtualenv/bin/gunicorn \
+    --bind unix:/tmp/DOMAIN.socket \
+    carmesi.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
