@@ -4,7 +4,7 @@ Description=Gunicorn server for DOMAIN
 [Service]
 Restart=on-failure
 User=carmesi
-WorkingDirectory=/home/carmesi/sites/DOMAIN
+WorkingDirectory=/home/carmesi/sites/DOMAIN/carmesi
 EnvironmentFile=/home/carmesi/sites/DOMAIN/.env
 
 ExecStart=/home/carmesi/sites/DOMAIN/virtualenv/bin/gunicorn \
