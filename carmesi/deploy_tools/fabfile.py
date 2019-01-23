@@ -5,8 +5,10 @@ from fabric.api import cd, env, local, run
 REPO_URL = 'https://github.com/raultr/Carmesi'
 
 def deploy():
+    #site_folder = f'/home/{env.user}/sites/{env.host}'
     site_folder = f'/home/{env.user}/sites/{env.host}'
-    run(f'mkdir -p {site_folder}')
+    ruta_remota = f'mkdir -p {site_folder}'
+    run(ruta_remota)
     with cd(site_folder):
         _get_latest_source()
         _update_virtualenv()
@@ -18,14 +20,15 @@ def _get_latest_source():
     if exists('.git'):
         run('git fetch')
     else:
-        run(f'git clone {REPO_URL} .')
+        comando = "git clone {} .".format(REPO_URL)
+        run(comando)
     current_commit = local("git log -n 1 --format=%H", capture=True)
     run(f'git reset --hard {current_commit}')
 
 def _update_virtualenv():
     if not exists('virtualenv/bin/pip'):
         run(f'python3.6 -m venv virtualenv')
-    run('./virtualenv/bin/pip install -r requirements.txt')
+    run('./virtualenv/bin/pip  install -r carmesi/requirements.txt')
 
 def _create_or_update_dotenv():
     append('.env', 'DJANGO_DEBUG_FALSE=y')
