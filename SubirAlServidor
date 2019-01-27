@@ -1,0 +1,10 @@
+Probar los servidores:
+
+source ../virtualenv/bin/activate
+
+
+STAGING_SERVER=carmesi-staging.raultr.info ./manage.py test functional_tests --settings=carmesi.settings
+
+STAGING_SERVER=carmesi.raultr.info ./manage.py test functional_tests --settings=carmesi.settings
+
+STAGING_SERVER=localhost:8000 ./manage.py test functional_tests --settings=carmesi.settings
