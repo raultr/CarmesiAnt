@@ -374,3 +374,6 @@ class ParametroNodoMenuAPITest(APITestCase):
         response = self.client.get(base_url_arbol, format='json')
         self.assertEquals(response.data,'[]')
 
+    def test_probandoError(self):
+        self.assertEqual(2,3)
+
