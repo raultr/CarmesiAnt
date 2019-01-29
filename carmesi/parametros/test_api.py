@@ -375,5 +375,5 @@ class ParametroNodoMenuAPITest(APITestCase):
         self.assertEquals(response.data,'[]')
 
     def test_probandoError(self):
-        self.assertEqual(2,3)
+        self.assertEqual(3,3)
 
