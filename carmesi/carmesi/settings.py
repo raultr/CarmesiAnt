@@ -35,10 +35,8 @@ else:
     SECRET_KEY = 'insecure-key-for-dev'
     ALLOWED_HOSTS = ['*']
 
-# Application definition
-
-INSTALLED_APPS = [
-    # Django apps
+# Apps
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -47,12 +45,19 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_swagger',
-    # Third apps'
-    'sequences.apps.SequencesConfig',
-
-    # Local apps
-    'parametros',
 ]
+
+THIRD_PARTY_APPS = [
+    'sequences.apps.SequencesConfig',
+]
+
+LOCAL_APPS = [
+    'parametros.apps.ParametrosAppConfig',
+    'users.apps.UsersAppConfig',
+    'utilerias.apps.UtileriasAppConfig'
+]
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -62,6 +67,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_currentuser.middleware.ThreadLocalUserMiddleware',
 ]
 
 ROOT_URLCONF = 'carmesi.urls'
@@ -84,6 +90,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'carmesi.wsgi.application'
 
+
+# Users & Authentication
+AUTH_USER_MODEL = 'users.User'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases

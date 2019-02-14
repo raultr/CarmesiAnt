@@ -1,8 +1,9 @@
 # Django
 from django.urls import  path
 
-# Api
-from parametros.api import CreateMenu, UpdateMenu, NodoMenuDetailApi, NodoMenuUpdateApi, NodoMenuUpdateOrdenApi, NodoMenuUpdatePadreApi
+# Views
+from parametros.views.menus import CreateMenu,UpdateMenu
+from parametros.views.nodosmenus import  NodoMenuDetailApi, NodoMenuUpdateApi, NodoMenuUpdateOrdenApi, NodoMenuUpdatePadreApi
 
 urlpatterns =[
     path('api/parametros/menu/', CreateMenu.as_view(), name='menu_list'),

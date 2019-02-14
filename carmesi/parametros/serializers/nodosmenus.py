@@ -3,16 +3,9 @@ from django.db import models
 from django.db import IntegrityError
 from django.core.exceptions import ValidationError
 from rest_framework import routers, serializers, viewsets
-from rest_framework.validators import UniqueValidator
 
 # Models
-from parametros.models import Menu, NodoMenu, ERROR_LONGITUD
-
-class MenuSerializer(serializers.ModelSerializer):
-    nombre = serializers.CharField(max_length=30, allow_blank=False,validators=[UniqueValidator(queryset=Menu.objects.all())])
-    class Meta:
-        model = Menu
-        fields = ('id', 'nombre')
+from parametros.models.nodosmenus import NodoMenu, ERROR_LONGITUD
 
 
 class NodoMenuSerializer(serializers.ModelSerializer):

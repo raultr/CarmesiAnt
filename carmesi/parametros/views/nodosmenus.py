@@ -1,4 +1,3 @@
-
 # standar library
 import json
 from functools import wraps
@@ -8,27 +7,18 @@ from django.http import HttpResponse, JsonResponse
 from django.core.exceptions import ValidationError
 from rest_framework import status, viewsets
 from rest_framework.views import APIView
-from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import routers, serializers, viewsets
 
 # Models Serializers
-from parametros.models import Menu, NodoMenu
-from parametros.serializers import MenuSerializer, NodoMenuSerializer,NodoMenuUpdateSerializer
+from parametros.models.nodosmenus import NodoMenu
+from parametros.serializers.nodosmenus import NodoMenuSerializer,NodoMenuUpdateSerializer
 
 
 # POST (201 CREATED) 400
 # GET (200 OK) (404 NOT FOUND) (400 BAD REQUEST)
 # PUT (200 OK) (404 NOT FOUND)
 # DELETE (200 OK) (404 NOT FOUND)
-
-class CreateMenu(generics.ListCreateAPIView):
-    serializer_class = MenuSerializer
-    queryset = Menu.objects.all()
-
-class UpdateMenu(generics.RetrieveUpdateAPIView):
-    serializer_class = MenuSerializer
-    queryset = Menu.objects.all()
 
 
 def procesar(func):

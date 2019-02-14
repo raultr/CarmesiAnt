@@ -1,5 +1,6 @@
 from django.apps import AppConfig
 
 
-class MenuConfig(AppConfig):
-    name = 'menu'
+class ParametrosAppConfig(AppConfig):
+    name = 'parametros'
+    verbose_name = 'Parametros'
